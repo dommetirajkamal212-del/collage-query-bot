@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>St Mary's Institutions — Information Desk</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+  :root{
+    --ink:#1c2c3d;
+    --ink-2:#2c4059;
+    --parchment:#efe6d2;
+    --parchment-2:#e3d7ba;
+    --brass:#a9812f;
+    --maroon:#7a2331;
+    --paper:#faf7ef;
+    --line: rgba(28,44,61,0.14);
+    --shadow: 0 14px 36px rgba(28,44,61,0.22);
+    --good:#2f7a4f;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; min-height:100vh;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #24384f 0%, transparent 60%),
+      radial-gradient(1000px 500px at 110% 10%, #33506f 0%, transparent 55%),
+      var(--ink);
+    font-family:'Source Sans 3', sans-serif;
+    color:var(--ink);
+    display:flex; align-items:flex-start; justify-content:center;
+    padding:36px 16px;
+  }
+
+  .app{
+    width:100%; max-width:860px;
+    background:var(--paper);
+    border-radius:6px; box-shadow:var(--shadow); overflow:hidden;
+    border:1px solid rgba(0,0,0,0.06);
+  }
+
+  header{
+    background: linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%);
+    color:var(--parchment);
+    padding:26px 30px 20px;
+    position:relative; border-bottom:4px solid var(--brass);
+  }
+  header::after{
+    content:""; position:absolute; left:0; right:0; bottom:-4px; height:2px;
+    background:repeating-linear-gradient(90deg, var(--brass) 0 6px, transparent 6px 12px);
+    opacity:0.5;
+  }
+  .crest-row{display:flex; align-items:center; gap:16px;}
+  .crest{
+    width:52px; height:52px; border-radius:50%;
+    background: conic-gradient(from 220deg, var(--brass), #7a5a1e, var(--brass));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-weight:700; color:var(--ink);
+    font-size:13px; flex:none;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25), 0 2px 6px rgba(0,0,0,0.35);
+  }
+  h1{ font-family:'Fraunces', serif; font-weight:600; font-size:24px; margin:0; letter-spacing:0.2px; }
+  .subtitle{
+    font-size:12px; letter-spacing:1.6px; text-transform:uppercase;
+    color:var(--parchment-2); opacity:0.85; margin-top:4px;
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  .institutes{ display:flex; background:var(--parchment); border-bottom:1px solid var(--line); }
+  .inst-tab{
+    flex:1; text-align:center; padding:15px 10px;
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.3px;
+    color:var(--ink-2); background:transparent; border:none; border-right:1px solid var(--line);
+    cursor:pointer; line-height:1.4; transition:background .15s ease, color .15s ease;
+  }
+  .inst-tab:last-child{ border-right:none; }
+  .inst-tab strong{ display:block; font-family:'Fraunces', serif; font-size:15px; font-weight:600; margin-bottom:2px; }
+  .inst-tab:hover{ background:var(--paper); }
+  .inst-tab.active{ background:var(--paper); color:var(--maroon); box-shadow: inset 0 -3px 0 var(--maroon); }
+
+  .inst-banner{
+    padding:16px 24px; background:#fff; border-bottom:1px solid var(--line);
+    display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  }
+  .inst-banner .meta{ font-size:13px; color:var(--ink-2); line-height:1.5; max-width:560px; }
+  .inst-banner .meta b{ color:var(--ink); }
+  .badges{ display:flex; gap:6px; flex-wrap:wrap; }
+  .badge{
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:0.4px;
+    padding:4px 9px; border-radius:20px; background:var(--parchment); color:var(--ink-2);
+    border:1px solid var(--line); white-space:nowrap;
+  }
+
+  .topics{ display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; padding:20px 24px 8px; }
+  .topic-btn{
+    font-family:'JetBrains Mono', monospace; font-size:12px; padding:12px 10px;
+    border-radius:3px; text-align:left; background:#fff; border:1px solid var(--line);
+    color:var(--ink-2); cursor:pointer; transition:border-color .12s ease, transform .12s ease;
+  }
+  .topic-btn:hover{ border-color:var(--brass); transform:translateY(-1px); }
+  .topic-btn.active{ border-color:var(--maroon); color:var(--maroon); background:#fbf3ee; }
+
+  .panel{
+    margin:18px 24px 10px; background:#fff; border:1px solid var(--line);
+    border-left:3px solid var(--brass); border-radius:3px; padding:20px 22px;
+    min-height:150px; font-size:14.5px; line-height:1.65;
+  }
+  .panel .label{
+    display:block; font-family:'JetBrains Mono', monospace; font-size:10.5px;
+    letter-spacing:1px; text-transform:uppercase; color:var(--brass); margin-bottom:9px;
+  }
+  .panel b{ color:var(--ink-2); }
+  .panel ul{ margin:8px 0 0; padding-left:18px; }
+  .panel li{ margin:4px 0; }
+  .panel .placeholder{ color:#9aa3ad; font-style:italic; }
+  .panel table{ width:100%; border-collapse:collapse; margin-top:8px; font-size:14px; }
+  .panel th, .panel td{ text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); }
+  .panel th{ font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:0.5px; text-transform:uppercase; color:var(--brass); }
+  .note{
+    margin-top:12px; padding-top:10px; border-top:1px dashed var(--line);
+    font-size:12px; color:#8a93a0; font-style:italic;
+  }
+  .panel a{ color:var(--maroon); text-decoration:none; border-bottom:1px solid currentColor; }
+
+  footer{
+    padding:14px 24px 22px; text-align:center;
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; color:#8a93a0; line-height:1.7;
+  }
+
+  @media (max-width:560px){
+    .topics{ grid-template-columns:repeat(2, 1fr); }
+    .inst-tab strong{ font-size:12.5px; } .inst-tab{ font-size:9.5px; }
+    h1{ font-size:19px; }
+    .inst-banner{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header>
+    <div class="crest-row">
+      <div class="crest">SM</div>
+      <div>
+        <h1>St Mary's Institutions</h1>
+        <div class="subtitle">Information Desk · Deshmukhi Campus, Hyderabad</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="institutes" id="institutes"></div>
+  <div class="inst-banner" id="banner"></div>
+  <div class="topics" id="topics"></div>
+  <div class="panel" id="panel">
+    <span class="placeholder">Select a topic above to see information.</span>
+  </div>
+  <footer>
+    St Mary's Engineering College · St Mary's Group of Institutions · St Mary's Rehabilitation University<br>
+    Information compiled from each institution's official website and public admission records, Oct 2026. Figures are indicative — please confirm current fees and dates with the admissions office before applying.
+  </footer>
+</div>
+
+<script>
+/* ---------------------------------------------------------
+   Content compiled from official/public sources (Oct 2026):
+   - smru.edu.in (official site)
+   - careers360.com, collegedunia.com, admistay.com (admission aggregators)
+   Fee figures are approximate total/annual tuition reported by
+   aggregators and should be verified with the admissions office.
+--------------------------------------------------------- */
+const INSTITUTES = [
+  { id:'smec', short:'SMEC', name:"St Mary's Engineering College" },
+  { id:'smgi', short:'SMGI', name:"St Mary's Group of Institutions" },
+  { id:'smru', short:'SMRU', name:"St Mary's Rehabilitation University" }
+];
+
+const TOPICS = ['about','courses','fees','admissions','facilities','contact'];
+const TOPIC_LABELS = {
+  about:'About', courses:'Courses Offered', fees:'Fee Structure',
+  admissions:'Admissions', facilities:'Facilities & Campus', contact:'Address & Contact'
+};
+
+const BANNER = {
+  smec:{ meta:`Autonomous engineering college, established <b>1996</b> · Affiliated to <b>JNTU Hyderabad</b> · <b>AICTE</b> approved`, badges:['Est. 1996','JNTUH Affiliated','AICTE Approved'] },
+  smgi:{ meta:`Umbrella group running Engineering, Pharmacy and Diploma programmes on the same campus · <b>NCTE / AICTE / PCI</b> recognised`, badges:['Est. 1996','Multi-Programme Campus','NCTE·AICTE·PCI'] },
+  smru:{ meta:`UGC-recognised private university, established by <b>Telangana Act No. 10 of 2026</b> · 120-acre purpose-built campus`, badges:['UGC Recognised','Est. 2026','120-acre Campus'] }
+};
+
+const DATA = {
+  smec:{
+    about:`St Mary's Engineering College (SMEC) is a private engineering college at Deshmukhi, near Ramoji Film City, affiliated to JNTU Hyderabad and approved by AICTE. It has been running engineering and management programmes since 1996.`,
+    courses:`<ul>
+      <li><b>B.Tech</b> (4 yrs) — Computer Science & Engineering, AI & Machine Learning, AI & Data Science, Cyber Security, IoT, and other JNTUH-affiliated specialisations</li>
+      <li><b>M.Tech</b> (2 yrs) — Computer Science & Engineering</li>
+      <li><b>MBA</b> (2 yrs) and <b>MCA</b> (3 yrs)</li>
+      <li><b>Diploma / Polytechnic</b> (3 yrs) — Computer Science & Engineering, Embedded Systems</li>
+    </ul>
+    Admission via TS EAMCET / AP EAMCET (B.Tech), TS PGECET (M.Tech), TS POLYCET (Diploma).`,
+    fees:`<table>
+      <tr><th>Programme</th><th>Approx. Total Fee</th></tr>
+      <tr><td>B.Tech</td><td>₹1.8 – 2.0 Lakhs</td></tr>
+      <tr><td>MBA</td><td>₹54,000</td></tr>
+      <tr><td>MCA</td><td>₹81,000</td></tr>
+      <tr><td>Diploma / Polytechnic</td><td>₹46,500</td></tr>
+    </table>
+    <div class="note">Figures are aggregator-reported totals for the full course duration and vary by category/quota — confirm exact, category-wise fees with the SMEC admissions office.</div>`,
+    admissions:`Eligibility: 10+2 with minimum 45% marks (B.Tech/Diploma) plus a valid entrance score; a relevant bachelor's degree with minimum 45% for PG programmes (M.Tech/MBA/MCA). Admissions follow the TS/AP state counselling calendar, typically opening in the same window as JNTUH affiliated colleges each year.`,
+    facilities:`<ul>
+      <li>JNTUH-affiliated engineering labs and workshops</li>
+      <li>Library and reading hall</li>
+      <li>Hostel accommodation on campus</li>
+      <li>Sports grounds and indoor games facilities</li>
+      <li>Placement cell — reported highest package around ₹10 LPA</li>
+    </ul>`,
+    contact:`<b>Address</b><br>Batasingaram Main Road, Pochampally Mandal, Near Ramoji Film City, Deshmukhi, Yadadri Bhuvanagiri District, Telangana – 508284<br><br>
+    <b>Phone</b> — 90104 55590 / 96666 91040<br>
+    <b>Affiliation</b> — JNTU Hyderabad`
+  },
+  smgi:{
+    about:`St Mary's Group of Institutions is the umbrella administration running engineering, pharmacy and diploma programmes together on the Deshmukhi campus, under the same educational trust as SMEC. It is recognised by NCTE, AICTE and the Pharmacy Council of India (PCI).`,
+    courses:`<ul>
+      <li><b>B.Tech</b> — Computer Science & Engineering, Artificial Intelligence & Machine Learning, AI & Data Science</li>
+      <li><b>B.Pharmacy</b> (4 yrs)</li>
+      <li><b>Diploma</b> — Computer Science & Engineering</li>
+    </ul>`,
+    fees:`<table>
+      <tr><th>Programme</th><th>Approx. Total Fee</th></tr>
+      <tr><td>B.Pharmacy</td><td>₹2.40 Lakhs</td></tr>
+      <tr><td>B.Tech</td><td>₹1.80 Lakhs</td></tr>
+      <tr><td>Diploma</td><td>₹46,500</td></tr>
+    </table>
+    <div class="note">Figures are aggregator-reported totals for the full course duration — confirm exact, category-wise fees with the admissions office.</div>`,
+    admissions:`Admission routes mirror the respective state norms: TS/AP EAMCET for B.Tech, TS/AP PECET or equivalent for B.Pharmacy, and TS POLYCET for Diploma. 10+2 (or equivalent) with the subject-specific minimum percentage is required for each stream.`,
+    facilities:`<ul>
+      <li>Shared campus infrastructure with SMEC — labs, library, hostel, sports grounds</li>
+      <li>Pharmacy practice and quality-control labs for B.Pharmacy students</li>
+      <li>On-campus cafeteria and medical room</li>
+    </ul>`,
+    contact:`<b>Address</b><br>Batasingaram Main Road, Pochampally Mandal, Near Ramoji Film City, Deshmukhi, Yadadri Bhuvanagiri District, Telangana – 508284<br><br>
+    <b>Phone</b> — 90104 55590 / 96666 91040`
+  },
+  smru:{
+    about:`St Mary's Rehabilitation University (SMRU) is a UGC-recognised private university established by Telangana Act No. 10 of 2026, on a 120-acre campus at the same Deshmukhi location near Ramoji Film City. It offers 70+ programmes across six schools, with an emphasis on rehabilitation, health and allied sciences.`,
+    courses:`Six schools, offering UG, PG, Diploma, Integrated UG and Ph.D. programmes:<ul>
+      <li>School of Rehabilitation Sciences</li>
+      <li>School of Health & Allied Health Sciences</li>
+      <li>School of Psychology</li>
+      <li>School of Nursing Sciences</li>
+      <li>School of Engineering & Emerging Technologies</li>
+      <li>School of Law</li>
+    </ul>`,
+    fees:`Fee structure is programme-specific and set by the university each academic year; it is not yet published in a consolidated public table. <b>Contact the admissions office directly</b> (details below) or check <a href="https://apply.smru.edu.in" target="_blank" rel="noopener">apply.smru.edu.in</a> for current, programme-wise fees.`,
+    admissions:`Admissions for UG, PG and Diploma programmes are open for the 2026–27 session. Ph.D. applications for the current cycle are closed; the next cycle will be announced via official university notices. Apply online through <a href="https://apply.smru.edu.in" target="_blank" rel="noopener">apply.smru.edu.in</a>.`,
+    facilities:`<ul>
+      <li>120-acre purpose-built campus</li>
+      <li>Discipline-specific labs with clinical/professional exposure</li>
+      <li>High-end hostel accommodation with study suites and security</li>
+      <li>Mentoring, counselling and residential wellbeing support</li>
+      <li>Anti-ragging policy, grievance redressal cell, and Ombudsperson office</li>
+    </ul>`,
+    contact:`<b>Address</b><br>Near Ramoji Film City, Deshmukhi Village, Pochampally Mandal, Yadadri Bhuvanagiri District, Telangana – 508284<br><br>
+    <b>Phone</b> — 73311 19432 / 90104 55591 / 90104 55590<br>
+    <b>General Enquiries</b> — Reach@smru.edu.in<br>
+    <b>Registrar</b> — Registrar@smru.edu.in<br>
+    <b>Vice-Chancellor's Office</b> — Vice_chancellor@smru.edu.in<br>
+    <b>Website</b> — <a href="https://smru.edu.in" target="_blank" rel="noopener">smru.edu.in</a>`
+  }
+};
+
+let activeInstitute = 'smec';
+let activeTopic = null;
+
+const instWrap = document.getElementById('institutes');
+const banner = document.getElementById('banner');
+const topicsWrap = document.getElementById('topics');
+const panel = document.getElementById('panel');
+
+function renderInstitutes(){
+  instWrap.innerHTML = '';
+  INSTITUTES.forEach(inst => {
+    const btn = document.createElement('button');
+    btn.className = 'inst-tab' + (inst.id === activeInstitute ? ' active' : '');
+    btn.innerHTML = `<strong>${inst.short}</strong>${inst.name}`;
+    btn.addEventListener('click', () => {
+      activeInstitute = inst.id; activeTopic = null;
+      renderInstitutes(); renderBanner(); renderTopics(); renderPanel();
+    });
+    instWrap.appendChild(btn);
+  });
+}
+
+function renderBanner(){
+  const b = BANNER[activeInstitute];
+  banner.innerHTML = `
+    <div class="meta">${b.meta}</div>
+    <div class="badges">${b.badges.map(x => `<span class="badge">${x}</span>`).join('')}</div>
+  `;
+}
+
+function renderTopics(){
+  topicsWrap.innerHTML = '';
+  TOPICS.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'topic-btn' + (t === activeTopic ? ' active' : '');
+    btn.textContent = TOPIC_LABELS[t];
+    btn.addEventListener('click', () => { activeTopic = t; renderTopics(); renderPanel(); });
+    topicsWrap.appendChild(btn);
+  });
+}
+
+function renderPanel(){
+  if(!activeTopic){
+    panel.innerHTML = `<span class="placeholder">Select a topic above to see information for ${INSTITUTES.find(i=>i.id===activeInstitute).name}.</span>`;
+    return;
+  }
+  const inst = INSTITUTES.find(i => i.id === activeInstitute);
+  const content = DATA[activeInstitute][activeTopic];
+  panel.innerHTML = `<span class="label">${inst.name} — ${TOPIC_LABELS[activeTopic]}</span>${content}`;
+}
+
+renderInstitutes();
+renderBanner();
+renderTopics();
+renderPanel();
+</script>
+
+</body>
+</html>

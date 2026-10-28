@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>St Mary's Institutions — AI Information Desk & Campus Query Portal</title>
+  <meta name="description" content="Official AI Query Desk & Information Portal for St Mary's Engineering College (SMEC), St Mary's Group of Institutions (SMGI), and St Mary's Rehabilitation University (SMRU), Deshmukhi Campus, Hyderabad.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page-container">
+  <!-- Top Navigation & Branding -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="crest-container">
+        <div class="crest-shield" id="crestShield" aria-label="St Mary's Shield">SM</div>
+        <div class="brand-text">
+          <h1>St Mary's Institutions</h1>
+          <div class="brand-subtitle">
+            <span class="status-dot"></span>
+            <span>Virtual Information Desk · Deshmukhi Campus, Hyderabad</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="themeToggleBtn" class="header-action-btn" title="Toggle theme (Dark / Parchment)">
+          <span class="icon" id="themeIcon">🌓</span>
+          <span class="btn-text">Theme</span>
+        </button>
+        <button id="ttsToggleBtn" class="header-action-btn" title="Toggle audio voice responses">
+          <span class="icon" id="ttsIcon">🔊</span>
+          <span class="btn-text">Voice On</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="main-nav" aria-label="Primary navigation">
+      <button class="nav-tab active" data-view="chat" id="navChatBtn">
+        <span class="tab-icon">💬</span>
+        <span class="tab-label">AI Query Desk</span>
+      </button>
+      <button class="nav-tab" data-view="directory" id="navDirectoryBtn">
+        <span class="tab-icon">🏛️</span>
+        <span class="tab-label">Campus Directory</span>
+      </button>
+      <button class="nav-tab" data-view="compare" id="navCompareBtn">
+        <span class="tab-icon">⚖️</span>
+        <span class="tab-label">Institution Comparison</span>
+      </button>
+      <button class="nav-tab" data-view="calculator" id="navCalculatorBtn">
+        <span class="tab-icon">📊</span>
+        <span class="tab-label">Course & Fee Finder</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main View Container -->
+  <main class="app-main">
+
+    <!-- VIEW 1: AI Chat & Query Assistant -->
+    <section id="view-chat" class="view-panel active" aria-labelledby="navChatBtn">
+      <div class="chat-wrapper">
+        <div class="chat-intro-card">
+          <div class="intro-badge">⚡ Instant Assistance</div>
+          <h2>Ask anything about St Mary's</h2>
+          <p>Get real-time answers regarding admissions, fees, B.Tech specializations, hostel facilities, entrance criteria, and contact details for SMEC, SMGI, and SMRU.</p>
+          
+          <div class="quick-chips-wrapper">
+            <span class="chips-title">Frequent Inquiries:</span>
+            <div class="quick-chips" id="quickChipsContainer">
+              <button class="chip" data-query="What is the fee for B.Tech CSE at SMEC?">💰 B.Tech CSE Fees</button>
+              <button class="chip" data-query="How to apply for SMRU admission?">🎓 SMRU Online Admission</button>
+              <button class="chip" data-query="What are the hostel and mess facilities?">🏢 Hostel & Campus Facilities</button>
+              <button class="chip" data-query="What is the highest placement package?">💼 Highest Placement Package</button>
+              <button class="chip" data-query="Compare SMEC and SMRU">⚖️ SMEC vs SMRU</button>
+              <button class="chip" data-query="Give me contact phone numbers and address">📞 Contact & Address</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages" role="log" aria-live="polite">
+          <!-- Bot greeting is initialized by JS -->
+        </div>
+
+        <!-- Chat Input Form -->
+        <div class="chat-input-container">
+          <form id="chatForm" class="chat-form">
+            <button type="button" id="micBtn" class="chat-tool-btn" title="Speak your question (Speech to text)">
+              <span class="icon">🎙️</span>
+            </button>
+            <input 
+              type="text" 
+              id="chatInput" 
+              class="chat-input" 
+              placeholder="Type your question (e.g., 'What is the fee for B.Pharmacy?' or 'Hostel facilities?')" 
+              autocomplete="off"
+              required
+            />
+            <button type="submit" id="sendBtn" class="chat-send-btn" title="Send Question">
+              <span>Send</span>
+              <span class="send-arrow">➔</span>
+            </button>
+          </form>
+          <div class="input-hint">
+            <span>Powered by St Mary's Knowledge System</span> · <span>Telangana Act 10 / JNTUH / AICTE Verified</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: Interactive Campus Directory -->
+    <section id="view-directory" class="view-panel" aria-labelledby="navDirectoryBtn" hidden>
+      <div class="directory-container">
+        <!-- Institution Selector -->
+        <div class="inst-selector" id="instSelector" role="tablist">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Institute Summary Banner -->
+        <div class="inst-banner-card" id="instBannerCard">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Directory Topic Tabs -->
+        <div class="topic-grid" id="topicGrid" role="tablist">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Topic Detail Display Box -->
+        <div class="detail-panel" id="detailPanel">
+          <div class="empty-detail-state">
+            <span class="empty-icon">📖</span>
+            <p>Select any category above to view comprehensive institutional records.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: Institution Comparison Matrix -->
+    <section id="view-compare" class="view-panel" aria-labelledby="navCompareBtn" hidden>
+      <div class="compare-container">
+        <div class="section-heading">
+          <h2>St Mary's Institutions Comparison Matrix</h2>
+          <p>Understand the distinctions, accreditations, and academic offerings across the Deshmukhi campus.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Feature / Parameter</th>
+                <th class="col-smec">SMEC<br><small>Engineering College</small></th>
+                <th class="col-smgi">SMGI<br><small>Group of Institutions</small></th>
+                <th class="col-smru">SMRU<br><small>Rehabilitation University</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Institution Type</strong></td>
+                <td>Autonomous Engineering College</td>
+                <td>Integrated Professional Campus</td>
+                <td>UGC Recognised Private State University</td>
+              </tr>
+              <tr>
+                <td><strong>Established Year</strong></td>
+                <td><span class="table-badge">1996</span></td>
+                <td><span class="table-badge">1996</span></td>
+                <td><span class="table-badge">2026</span> (Telangana Act 10)</td>
+              </tr>
+              <tr>
+                <td><strong>Affiliation & Approvals</strong></td>
+                <td>JNTU Hyderabad · AICTE Approved</td>
+                <td>JNTUH · SBTET · NCTE · AICTE · PCI Approved</td>
+                <td>UGC Recognised under Sec 2(f) · Telangana State Act</td>
+              </tr>
+              <tr>
+                <td><strong>Key Flagship Courses</strong></td>
+                <td>B.Tech (CSE, AIML, AIDS, Cyber), M.Tech, MBA, MCA, Diploma</td>
+                <td>B.Pharmacy, B.Tech, Polytechnic Diploma</td>
+                <td>70+ Programs across 6 Schools: Rehab Sciences, Health, Law, Psychology, Tech</td>
+              </tr>
+              <tr>
+                <td><strong>Primary Entrance Exams</strong></td>
+                <td>TS EAMCET / AP EAMCET / PGECET / ICET</td>
+                <td>TS EAMCET / TS PECET / POLYCET</td>
+                <td>apply.smru.edu.in (University & National Entrance)</td>
+              </tr>
+              <tr>
+                <td><strong>Typical Tuition Fees</strong></td>
+                <td>B.Tech ₹1.8 – ₹2.0 Lakhs Total</td>
+                <td>B.Pharm ₹2.40 Lakhs Total</td>
+                <td>Annual structure per School schedule</td>
+              </tr>
+              <tr>
+                <td><strong>Campus Location</strong></td>
+                <td colspan="3" class="text-center">Deshmukhi Village, Near Ramoji Film City, Yadadri Bhuvanagiri Dist, Telangana (Unified 120-Acre Campus)</td>
+              </tr>
+              <tr>
+                <td><strong>Hostels & Amenities</strong></td>
+                <td colspan="3" class="text-center">On-campus secure boys & girls hostels, dining cafeteria, clinical labs, library & sports complex</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: Course & Fee Finder -->
+    <section id="view-calculator" class="view-panel" aria-labelledby="navCalculatorBtn" hidden>
+      <div class="calculator-container">
+        <div class="section-heading">
+          <h2>Interactive Course & Fee Explorer</h2>
+          <p>Quickly search programs, view eligibility, entrance requirements, and approximate fee structures.</p>
+        </div>
+
+        <div class="filter-bar">
+          <input type="text" id="courseFilterInput" class="filter-search-input" placeholder="Search by course name (e.g. B.Tech, Pharmacy, MBA, Law, Psychology)...">
+          <select id="instFilterSelect" class="filter-select">
+            <option value="all">All Institutions (SMEC, SMGI, SMRU)</option>
+            <option value="smec">SMEC (Engineering College)</option>
+            <option value="smgi">SMGI (Group of Institutions)</option>
+            <option value="smru">SMRU (Rehabilitation University)</option>
+          </select>
+        </div>
+
+        <div class="course-cards-grid" id="courseCardsGrid">
+          <!-- Populated dynamically by JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Emergency / Fast Helpline Banner -->
+  <aside class="quick-contact-bar">
+    <div class="quick-contact-inner">
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <span>Near Ramoji Film City, Deshmukhi (Telangana – 508284)</span>
+      </div>
+      <div class="contact-links">
+        <a href="tel:9010455590" class="action-pill">📞 Call: 90104 55590</a>
+        <a href="tel:7331119432" class="action-pill">📞 SMRU Desk: 73311 19432</a>
+        <a href="https://apply.smru.edu.in" target="_blank" rel="noopener" class="action-pill primary-pill">🌐 Apply Online ↗</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-links">
+      <span>St Mary's Engineering College (SMEC)</span> · 
+      <span>St Mary's Group of Institutions (SMGI)</span> · 
+      <span>St Mary's Rehabilitation University (SMRU)</span>
+    </div>
+    <div class="footer-disclaimer">
+      Information compiled from official university records and public regulatory filings (Telangana Act No. 10 of 2026, JNTUH, AICTE, PCI). All fee figures are indicative estimates and subject to current state admission convenor notifications.
+    </div>
+  </footer>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

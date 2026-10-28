@@ -1,0 +1,25 @@
+{
+  "name": "college-query-bot",
+  "version": "1.0.0",
+  "description": "AI-powered College Information Desk & Query Bot for St Mary's Institutions, Deshmukhi Campus",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "college-bot",
+    "chatbot",
+    "st-marys",
+    "render-deploy"
+  ],
+  "author": "St Mary's Information Desk",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
